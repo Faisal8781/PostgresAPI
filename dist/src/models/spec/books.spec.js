@@ -28,13 +28,35 @@ describe('Book Model', () => {
         expect(store.index).toBeDefined();
     });
     it('create method should add a book', () => __awaiter(void 0, void 0, void 0, function* () {
-        // @ts-ignore
         const result = yield store.create({
+            id: 14,
             title: 'Bridge to Terabithia',
             total_pages: 250,
             author: 'Katherine Paterson',
             summary: 'Childrens',
         });
+        expect(result).toEqual({
+            id: 14,
+            title: 'Bridge to Terabithia',
+            total_pages: 250,
+            author: 'Katherine Paterson',
+            summary: 'Childrens',
+        });
+    }));
+    it('index method should return a list of books', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield store.index();
+        expect(result).toEqual([
+            {
+                id: 1,
+                title: 'Bridge to Terabithia',
+                total_pages: 250,
+                author: 'Katherine Paterson',
+                summary: 'Childrens',
+            },
+        ]);
+    }));
+    it('show method should return the correct book', () => __awaiter(void 0, void 0, void 0, function* () {
+        const result = yield store.show('1');
         expect(result).toEqual({
             id: 1,
             title: 'Bridge to Terabithia',
@@ -42,5 +64,10 @@ describe('Book Model', () => {
             author: 'Katherine Paterson',
             summary: 'Childrens',
         });
+    }));
+    it('delete method should remove the book', () => __awaiter(void 0, void 0, void 0, function* () {
+        store.delete('1');
+        const result = yield store.index();
+        expect(result).toEqual([]);
     }));
 });

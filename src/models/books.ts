@@ -5,7 +5,7 @@ export type Book = {
   id: number;
   title: string;
   author: string;
-  totalPages: number;
+  total_pages: number;
   summary: string;
 };
 
@@ -45,14 +45,14 @@ export class BookStore {
   async create(b: Book): Promise<Book> {
     try {
       const sql =
-        'INSERT INTO books (title, author, totalPages, summary) VALUES($1, $2, $3, $4) RETURNING *';
+        'INSERT INTO books (title, author, total_pages, summary) VALUES($1, $2, $3, $4) RETURNING *';
       // @ts-ignore
       const conn = await client.connect();
 
       const result = await conn.query(sql, [
         b.title,
         b.author,
-        b.totalPages,
+        b.total_pages,
         b.summary,
       ]);
 
@@ -64,7 +64,7 @@ export class BookStore {
     } catch (err) {
       // @ts-ignore
 
-      throw new Error(`Could not add new book ${title}. Error: ${err}`);
+      throw new Error(`Could not add new book ${b.title}. Error: ${err}`);
     }
   }
 

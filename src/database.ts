@@ -3,6 +3,7 @@ import { Pool } from 'pg';
 
 dotenv.config();
 
+//@ts-ignore
 const {
   POSTGRES_HOST,
   POSTGRES_DB,
