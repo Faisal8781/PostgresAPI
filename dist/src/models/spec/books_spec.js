@@ -66,7 +66,7 @@ describe('Book Model', () => {
         });
     }));
     it('delete method should remove the book', () => __awaiter(void 0, void 0, void 0, function* () {
-        store.delete('1');
+        yield store.delete('1');
         const result = yield store.index();
         expect(result).toEqual([]);
     }));
