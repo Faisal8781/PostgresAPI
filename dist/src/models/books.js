@@ -63,7 +63,6 @@ class BookStore {
                 return book;
             }
             catch (err) {
-                // @ts-ignore
                 throw new Error(`Could not add new book ${b.title}. Error: ${err}`);
             }
         });

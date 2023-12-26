@@ -1,12 +1,11 @@
 {
   "name": "postgreapi",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/server.ts",
-    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuc",
-    "test": "npx tsc && db-migrate --env test up && jasmine && db-migrate db:drop test",
+    "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./build --onSuccess \"node ./build/server.js\"",
+    "test": "set ENV=test && npx tsc && db-migrate --env test up && jasmine && db-migrate db:drop books",
     "tsc": "tsc"
   },
   "author": "",
@@ -30,5 +29,14 @@
     "jasmine-ts": "^0.4.0",
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.0.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Faisal8781/PostgresAPI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Faisal8781/PostgresAPI/issues"
+  },
+  "homepage": "https://github.com/Faisal8781/PostgresAPI#readme",
+  "description": ""
 }
