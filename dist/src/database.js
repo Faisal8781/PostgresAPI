@@ -9,7 +9,6 @@ dotenv_1.default.config();
 const { POSTGRES_HOST, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_TEST_DB, ENV, } = process.env;
 let client;
 console.log(ENV);
-console.log('WOWOWO');
 // if (ENV === 'test') {
 //   client = new Pool({
 //     host: POSTGRES_HOST,

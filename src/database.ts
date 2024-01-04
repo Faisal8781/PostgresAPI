@@ -14,7 +14,6 @@ const {
 
 let client;
 console.log(ENV);
-console.log('WOWOWO');
 
 // if (ENV === 'test') {
 //   client = new Pool({
