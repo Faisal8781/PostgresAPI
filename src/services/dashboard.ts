@@ -16,7 +16,7 @@ export class DashboardQueries {
 
       const order = result.rows[0];
 
-      if (order.status !== 'active') {
+      if (order.status !== 'Active') {
         throw new Error(
           `Could not add product ${productId} to order ${orderId} because order status is ${order.status}`
         );
@@ -41,15 +41,13 @@ export class DashboardQueries {
   }
 
   // Orders per User
-  async OrdersperUser(id: string): Promise<[]> {
+  async OrdersperUser(user_id: string): Promise<[]> {
     try {
       //@ts-ignore
       const conn = await client.connect();
-      const sql = 'SELECT * FROM orders WHERE user_id = ($1)';
-      const result = await conn.query(sql, [id]);
-
+      const sql = 'SELECT * FROM orders WHERE user_id=$1';
+      const result = await conn.query(sql, [user_id]);
       conn.release();
-
       return result.rows;
     } catch (err) {
       throw new Error(`unable get users with orders: ${err}`);
@@ -62,7 +60,7 @@ export class DashboardQueries {
       //@ts-ignore
       const conn = await client.connect();
       const sql =
-        "SELECT * FROM orders WHERE user_id = ($1) AND status = 'complete'";
+        "SELECT * FROM orders WHERE user_id = ($1) AND status = 'Complete'";
       const result = await conn.query(sql, [id]);
 
       conn.release();
@@ -98,7 +96,6 @@ export class DashboardQueries {
       const sql =
         'SELECT SUM(quantity), product_id FROM orders_products WHERE order_id = ($1) AND product_id = ($2) GROUP BY product_id;';
       const result = await conn.query(sql, [id, productId]);
-
       conn.release();
       return result.rows;
     } catch (err) {
@@ -112,9 +109,10 @@ export class DashboardQueries {
       //@ts-ignore
       const conn = await client.connect();
       const sql =
-        'SELECT name, COUNT(name)  AS "Number of appear" FROM products INNER JOIN orders_products ON products.id = orders_products.product_id GROUP BY name ORDER BY "Number of appear" DESC LIMIT 5';
+        'SELECT name, COUNT(name)  AS "NumberOfAppear" FROM products INNER JOIN orders_products ON products.id = orders_products.product_id GROUP BY name ORDER BY "NumberOfAppear" DESC LIMIT 5';
       const result = await conn.query(sql);
       conn.release();
+
       return result.rows;
     } catch (err) {
       throw new Error(`unable get products by price: ${err}`);

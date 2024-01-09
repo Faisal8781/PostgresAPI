@@ -2,11 +2,9 @@
 import client from '../database';
 
 export type Order = {
-  id: number;
+  id: string;
   status: string;
-  quantity: number;
-  user_id: number;
-  product_id: number;
+  user_id: string;
 };
 
 export class OrderStore {
@@ -33,9 +31,7 @@ export class OrderStore {
       const conn = await client.connect();
 
       const result = await conn.query(sql, [id]);
-
       conn.release();
-
       return result.rows[0];
     } catch (err) {
       throw new Error(`Could not find order ${id}. Error: ${err}`);
@@ -63,7 +59,7 @@ export class OrderStore {
 
   async delete(id: string): Promise<Order> {
     try {
-      const sql = 'DELETE FROM orders WHERE id=($1)';
+      const sql = 'DELETE FROM orders WHERE id=($1) RETURNING *';
       // @ts-ignore
       const conn = await client.connect();
 
@@ -81,7 +77,7 @@ export class OrderStore {
 
   async update(status: string, id: string): Promise<Order> {
     try {
-      const sql = 'UPDATE orders SET status = ($1) WHERE id=($2)';
+      const sql = 'UPDATE orders SET status = ($1) WHERE id=($2) RETURNING *';
       // @ts-ignore
       const conn = await client.connect();
 

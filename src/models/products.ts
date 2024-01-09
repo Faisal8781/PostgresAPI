@@ -2,7 +2,7 @@
 import client from '../database';
 
 export type Product = {
-  id: number;
+  id: string;
   name: string;
   price: number;
   category: string;
@@ -62,29 +62,26 @@ export class ProductCart {
 
   async delete(id: string): Promise<Product> {
     try {
-      const sql = 'DELETE FROM products WHERE id=($1)';
+      const sql = 'DELETE FROM products WHERE id=($1) RETURNING *';
       // @ts-ignore
       const conn = await client.connect();
 
       const result = await conn.query(sql, [id]);
-
-      const product = result.rows[0];
-
       conn.release();
-
-      return product;
+      return result.rows[0];
     } catch (err) {
       throw new Error(`Could not delete product ${id}. Error: ${err}`);
     }
   }
 
-  async update(name: string, id: string): Promise<Product> {
+  async update(p: Product): Promise<Product> {
     try {
-      const sql = 'UPDATE products SET name = ($1) WHERE id=($2)';
+      const sql =
+        'UPDATE products SET name=$1, price=$2, category=$3 WHERE id=($4) RETURNING *';
       // @ts-ignore
       const conn = await client.connect();
 
-      const result = await conn.query(sql, [name, id]);
+      const result = await conn.query(sql, [p.name, p.price, p.category, p.id]);
 
       const order = result.rows[0];
 
@@ -92,7 +89,7 @@ export class ProductCart {
 
       return order;
     } catch (err) {
-      throw new Error(`Could not delete order ${id}. Error: ${err}`);
+      throw new Error(`Could not delete Product ${p.id}. Error: ${err}`);
     }
   }
 

@@ -15,15 +15,6 @@ const {
 let client;
 console.log(ENV);
 
-// if (ENV === 'test') {
-//   client = new Pool({
-//     host: POSTGRES_HOST,
-//     database: POSTGRES_TEST_DB,
-//     user: POSTGRES_USER,
-//     password: POSTGRES_PASSWORD,
-//   });
-// }
-
 if (ENV === 'dev') {
   client = new Pool({
     host: POSTGRES_HOST,

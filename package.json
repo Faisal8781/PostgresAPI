@@ -5,7 +5,7 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./build --onSuccess \"node ./build/server.js\"",
-    "test": "set ENV=test && npx tsc && db-migrate --env test up && jasmine && db-migrate --env test down",
+    "test": "set ENV=test && npx tsc && db-migrate --env test up && jasmine && db-migrate --env test reset",
     "tsc": "tsc"
   },
   "author": "",
@@ -28,11 +28,13 @@
     "@types/jasmine": "^5.1.4",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/pg": "^8.10.9",
+    "@types/supertest": "^6.0.2",
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "jasmine": "^5.1.0",
     "jasmine-spec-reporter": "^7.0.0",
     "jasmine-ts": "^0.4.0",
+    "supertest": "^6.3.3",
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.0.4"
   },
